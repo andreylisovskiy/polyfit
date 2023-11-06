@@ -1,0 +1,198 @@
+body {
+    /*background-image: url("/FP/media/background.jpg");*/
+    background-color: whitesmoke;
+}
+
+#boot-override div.margin_15 {
+	margin: 15px;
+}
+
+#boot-override .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+	   -moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+								  supported by Chrome and Opera */
+}
+
+#boot-override .navbar-text {
+	padding: 0;
+	margin: 0;
+}
+
+#boot-override .navbar {
+	padding: 5px;
+	margin: 0;
+}
+
+#boot-override .nav-item:not(.no-border) {
+	padding-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid white;
+}
+/*#boot-override .nav-item:last-child {*/
+/*  border-right: none;*/
+/*}*/
+#boot-override .no-border {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#boot-override ins {
+	text-decoration: none;
+}
+
+#boot-override .zero_padding {
+	padding-bottom: 0;
+	margin: 0;
+}
+/*#boot-override .table_color {*/
+/*    background-color: #009999;*/
+/*}*/
+
+#boot-override .dropdown-item:not(.active) {
+	color: lightslategray;
+}
+
+#boot-override .active, .active_group, .active_snapshot, .active_line_up {
+	background-color: #009688;
+}
+
+#boot-override .dropdown-item:hover {
+	font-size: larger;
+}
+
+#boot-override .active_group:hover, .active_snapshot:hover, .active_line_up:hover {
+	color: white;
+	background-color: #009688;
+}
+
+#boot-override .snapshot_font {
+	color: #ffcccc;
+}
+
+#boot-override #overlay {
+	position: fixed; /* Sit on top of the page content */
+	width: 100%; /* Full width (cover the whole page) */
+	height: 100%; /* Full height (cover the whole page) */
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+	z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+	cursor: crosshair; /* Add a crosshair on hover */
+}
+
+#boot-override .table_interact_buttons {
+	width: 30px; height: 30px; padding: 0; margin-bottom: 5px; margin-top: 0; position:relative; float: right;
+}
+
+#boot-override .notes, input[type='text'] {
+	color: #f1ffff; font-size: 1.4em; padding: 0; text-align: center;
+}
+
+#boot-override .disabled_interaction {
+    pointer-events: none;
+}
+
+#boot-override .alert-message{
+    color: crimson; font-weight: bold; background-color: transparent; font-size: 1.4em; display: inline-block; float: left; position: relative;
+}
+
+#boot-override .no_bottom_pad {
+    margin-bottom: 0;
+}
+
+#copy_text {
+	opacity: 0;
+}
+
+/*--------- toggle --------*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 34px;
+  margin: 0; padding: 0;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FF5722;
+  -webkit-transition: .4s;
+  transition: .4s;
+   border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2ab934;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(250%);
+}
+
+.slider:after
+{
+ content:'OFF';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 0.9em;
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+input:checked + .slider:after
+{  
+  content:'ON';
+}
+/*--------- toggle --------*/
+
+/*Tabulator:*/
+#boot-override .tabulator {
+	font-size: 0.75em;
+}
+
+#boot-override .table_interact_buttons {
+	margin-bottom: 0;
+}
+
+#boot-override .tabulator-col-title {
+    white-space: normal; padding-right: 15px;
+}
+
+#boot-override .tabulator-cell {
+    text-align: center; height: 100%;
+}

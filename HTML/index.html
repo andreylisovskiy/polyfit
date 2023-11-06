@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--****** This meta tag bellow is absolutely needed if you want to make your JQuery code run on IE9 and IE10!!! *******-->
+    <meta http-equiv="X-UA-Compatible" content="IE=10;IE=9;FF=3;OtherUA=4" />
+    <!--# force browser to load file from server:-->
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <title>Data Fitting</title>
+
+    <!--# # My custom CSS:-->
+    <link rel="stylesheet" type="text/css" href="../CSS/live_schedule_template.css?force_browser_to_reload_from_server">
+
+    <style>
+        #boot-override td.no_border {
+            border: none;
+        }
+
+        #my_chart {
+            display: inline-block; float: left; clear: both; width: 100%; height: 800px;
+        }
+
+        #submit_button {
+            transition-duration: 0.2s; background-color: rgba(19, 134, 19, 0.8); height: 50px; width: 150px; font-size: 2em; border-radius: 9px;
+            font-family: Geneva, fantasy, Optima, "Courier New"; padding: 10px; line-height: 0.5em;
+        }
+        #submit_button:hover {
+            background-color: limegreen;
+        }
+
+        /*#drop-area*/
+        /*{*/
+        /*    border:2px dotted #0B85A1;*/
+        /*    width:400px;*/
+        /*    color:#92AAB0;*/
+        /*    text-align:left;vertical-align:middle;*/
+        /*    padding:10px 10px 10 10px;*/
+        /*    margin-bottom:10px;*/
+        /*    font-size:200%;*/
+        /*    float: left;*/
+        /*    clear: both;*/
+        /*    display: inline-block;*/
+        /*    horiz-align: center;*/
+        /*    margin-left: 40%;*/
+        /*}*/
+
+        .box_shadow {
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+        }
+        .box_shadow:hover {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 15px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .custom_label {
+            font-size: 1.6em; padding: 3px; background-color: rgba(255, 100, 34, 0.3); font-family: Geneva, fantasy, Optima, "Courier New"; letter-spacing: 2px;
+            margin-top: 0; margin-bottom: 3px; display: inline-block; clear: both;
+        }
+
+        .custom_input {
+            margin-left: 5px;
+        }
+
+        .input_wrap {
+            display: inline-block; float: left; clear: both;
+        }
+
+    </style>
+</head>
+
+<body id="boot-override">
+    <div style="width: fit-content; margin-left: 2%; margin-top: 1%; float: left;">
+        <p>Example data curve fitting..</p>
+    </div>
+
+    <!--    get user input:-->
+    <!--    <div id="drop-area">Drag & Drop Files Here</div>-->
+    <div class="input_wrap">
+        <label class="btn-group box_shadow custom_label">X:</label>
+        <input class="form-control custom_input" type="text" id="x_values" style="color: darkslategray; height: 28px; width: 700px; display: inline-block; margin-bottom: 0; padding: 2px;">
+    </div>
+
+    <div class="input_wrap">
+        <label class="btn-group box_shadow custom_label">Y:</label>
+        <input class="form-control custom_input" type="text" id="y_values" style="color: darkslategray; height: 28px; width: 700px; display: inline-block; margin-bottom: 0; padding: 2px;">
+    </div>
+
+    <div class="input_wrap">
+        <label class="btn-group box_shadow custom_label">poly degree:</label>
+        <input class="form-control custom_input" type="number" min="0" max="40" id="poly_degree" style="font-size: 1.3em; align-content: center; color: darkslategray; height: 28px; width: 150px; display: inline-block; margin-bottom: 0; padding: 2px;">
+    </div>
+
+    <!--          SUBMIT:-->
+    <div class="input_wrap">
+        <button class="btn" style="display: inline-block; float: left; clear: both; margin: 5px; padding: 8px; color: whitesmoke; border: 2px solid limegreen;" id="submit_button">SUBMIT</button>
+    </div>
+
+    <div style="display: inline-block; width: fit-content; height: 35px; float: left; clear: both; margin-top: 5px; margin-bottom: 5px;">
+        <p id="expression" style="padding: 5px; margin: 0; color: darkslategray; opacity: 80%;"></p>
+    </div>
+
+    <div id='my_chart' style="opacity: 80%;"><!-- Plotly chart will be drawn inside this DIV --></div>
+<!--    <canvas id='my_chart'>&lt;!&ndash; chart will be drawn inside this DIV &ndash;&gt;</canvas>-->
+
+<!--    &lt;!&ndash;    ERROR message:&ndash;&gt;-->
+<!--    <div class="margin_15" id="Error_div" style="display: none;">-->
+<!--        <p>-->
+<!--            <img src="/css_js_media/media/error_image.png" alt="Error Sign" style="float:left;width:50px;height:50px;margin-left: 10%">-->
+<!--                <ins id="Error_message" class="error_message alert-message"></ins>-->
+<!--        </p>-->
+<!--    </div>-->
+
+    <!--################################################################################################# END OF HTML-->
+    <!--# SCRIPT IMPORTS:-->
+    <script src="../JS/jQuery/jquery-3.7.1.min.js" type="text/javascript"></script>
+    <script src="../JS/math/math.min.js"></script>
+    <script src="../JS/plotly/plotly-2.27.0.min.js" charset="utf-8" type="text/javascript"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js" integrity="sha512-6LKCH7i2+zMNczKuCT9ciXgFCKFp3MevWTZUXDlk7azIYZ2wF5LRsrwZqO7Flt00enUI+HwzzT5uhOvy6MNPiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+    <!--ChartJS:-->
+    <script src="../JS/Chart.js-2.9.4/Chart.min.js" type="text/javascript"></script>
+    <!--my JS:-->
+    <script src="../JS/js_code.js" type="text/javascript"></script>
+
+    <!--# SCRIPTING:-->
+    <script type="text/javascript">    // ################################################################################ JAVASCRIPT + JQUERY:
+        $(document).ready(function() {
+            // ************************************************************************************************* Events:
+
+            // from: https://phppot.com/jquery/jquery-drag-and-drop-image-upload/
+            $("#drop-area").on('dragenter', function (e){
+                e.preventDefault();
+            });
+            $("#drop-area").on('dragover', function (e){
+                e.preventDefault();
+            });
+            $("#drop-area").on('drop', function (e){
+                e.preventDefault();
+            var file = e.originalEvent.dataTransfer.files;
+            createFormData(file);
+            });
+
+            $("#submit_button").off().click(function() {
+                submit_form();
+            });
+
+
+            // ********************************************************************************************** functions:
+
+            // function plot_comparison(actual_chart_data, poly_chart_data) {
+            //     var ctx = document.getElementById('my_chart').getContext('2d');
+            //     myChart = new Chart(ctx, {
+            //         data: {
+            //             datasets: [{
+            //                 type: 'scatter',
+            //                 label: 'actual_chart_data',
+            //                 data: actual_chart_data,
+            //             }, {
+            //                 type: 'line',
+            //                 label: 'poly_chart_data',
+            //                 data: poly_chart_data,
+            //             }],
+            //             // labels: ['January', 'February', 'March', 'April']
+            //         },
+            //         options: {
+            //             title: {
+            //                 display: true,
+            //                 text: poly_order + 'order Polynomial Fitting'
+            //             },
+            //             scales: {
+            //                 xAxes: [{
+            //                     stacked: true,
+            //                     scaleLabel: {
+            //                         display: true,
+            //                         labelString: 'X'
+            //                     },
+            //                 }],
+            //                 yAxes: [{
+            //                     ticks: {
+            //                         beginAtZero: true
+            //                     },
+            //                     stacked: true,
+            //                     scaleLabel: {
+            //                         display: true,
+            //                         labelString: 'Y'
+            //                     },
+            //                 }]
+            //             }
+            //         }
+            //     });
+            // }
+
+            function plot_comparison(x_data, y_data, x_poly, y_poly) {
+                var trace1 = {
+                  x: x_data,
+                  y: y_data,
+                  mode: 'markers',
+                  marker: {
+                    color: 'rgba(8,146,63,0.85)',
+                    size: 12
+                  }
+                };
+
+                var trace3 = {
+                  x: x_poly,
+                  y: y_poly,
+                  mode: 'lines',
+                  line: {
+                    color: 'rgba(201,86,3,0.83)',
+                    width: 3
+                  }
+                };
+
+                var data = [trace1, trace3];
+
+                var layout = {
+                  title: 'Data Curve Fit - Polynomial degree: ' + poly_order
+                };
+
+                Plotly.newPlot('my_chart', data, layout);
+            }
+
+            function submit_form() {
+                let x_values = $('#x_values').val();
+                let y_values = $('#y_values').val();
+                poly_order = $('#poly_degree').val();
+
+                x_values = x_values.replace(/\s/g, "").split(",");
+                y_values = y_values.replace(/\s/g, "").split(",");
+
+                for (let array_ of [x_values, y_values]) {
+                    if (array_.some(isNaN)) {
+                        alert('can only use numeric values for data points...');
+                        return false;
+                    }
+                }
+
+                if (x_values.length != y_values.length) {
+                    alert('X and Y need to be same length...');
+                    return false;
+                }
+
+                // poly fit:
+                [poly_x, poly_y, polynomial_expression, coefs] = fit_data(x_values, y_values, poly_order);
+
+                $('#expression').html('y(x)=' + polynomial_expression);
+
+                // PLOT IT:
+                // const actual_chart_data = prep_for_chart_js(x, y);
+                // const poly_chart_data = prep_for_chart_js(poly_x, poly_y);
+                // plot_comparison(actual_chart_data, poly_chart_data); // Chart JS was acting weird today..
+                plot_comparison(x_values, y_values, poly_x, poly_y);
+
+            }
+
+
+            function main() {
+                //get data points:
+                let x = [1, 3, 6, 12, 20, 25];
+                let y = [6, 15, 3, 9, 35, 21];
+
+                $('#x_values').val(x);
+                $('#y_values').val(y);
+                $('#poly_degree').val(5);
+
+                submit_form();
+
+            }
+            // ################################################################################################### MAIN:
+            try {
+                // Initialize globals:
+                var system_admin = 'Andrey Lisovskiy';
+                var poly_order, myChart, polynomial_expression;
+                main();
+            }
+            catch (err) {
+                $("#Error_div").attr({
+                    "style" : "display: contents;"
+                });
+                $('#Error_message').html('Page load ERROR: ' + err.name + ':' + err.message + ' Contact system admin: ' + system_admin);
+            }
+        });
+    </script>
+
+</body>
+</html>
