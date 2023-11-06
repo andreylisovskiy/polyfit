@@ -10,8 +10,6 @@ function fit_data(x, y, poly_order) {
     const poly_y = eval_expression(polynomial_expression, poly_x);
     // console.log(poly_y);
 
-    // plot_comparison(x, y, poly_x, poly_y);
-
     return [poly_x, poly_y, polynomial_expression, coefs]
 }
 

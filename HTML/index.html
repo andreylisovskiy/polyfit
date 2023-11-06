@@ -18,8 +18,8 @@
     <link rel="stylesheet" type="text/css" href="../CSS/live_schedule_template.css?force_browser_to_reload_from_server">
 
     <style>
-        #boot-override td.no_border {
-            border: none;
+        body {
+            background-color: white;
         }
 
         #my_chart {
@@ -32,6 +32,13 @@
         }
         #submit_button:hover {
             background-color: limegreen;
+        }
+
+        code {
+          background-color: rgba(114, 215, 174, 0.3);
+          border-radius: 3px;
+          font-family: courier, monospace;
+          padding: 0 3px;
         }
 
         /*#drop-area*/
@@ -74,22 +81,52 @@
 </head>
 
 <body id="boot-override">
-    <div style="width: fit-content; margin-left: 2%; margin-top: 1%; float: left;">
-        <p>Example data curve fitting..</p>
+    <div style="width: 100%; padding-left: 2%; margin-top: 1%; float: left;">
+        <H1>Polynomial curve fitting - POLYFIT</H1>
     </div>
+
+    <div>
+        <p>
+            I was always fascinated by the idea of non-linear curve fitting the given data. Especially the polynomial fit one, as opposed to piece-wise splines, because piece-wise only
+            hold true within the bounds of data points and are only good for interpolation and never extrapolation guesses later on.
+            Thus, I have decided to implement my favorite feature from MATLAB the “polyfit” method.<br><br><br>
+            MATLAB describes it as such:<br><br>
+            <img alt="image from MATLAB" src="../media/image_1.png">
+            <br><br><br>
+            Under "Algorithms" section in MATLAB docs it shows the way it solves for polynomial coefficients:<br><br>
+            <img alt="image from MATLAB" src="../media/image_2.png">
+            <br><br><br>
+            I then searched the internet for the best implementation and of Vandermonde matrix algorithm and after sorting/filtering through numerous less useful resources I found one
+            great one that actually does a great job in explaining/simplifying and providing the best simple solution formula to follow. The website link is here:
+            <a href="https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html">https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html</a>
+            <br><br><br>
+            This site provides a great explanation and the solution flow to reduce it to a rather simple matrix algebra operations here:<br><br>
+            <img alt="image from MATLAB" src="../media/image_3.png">
+            <br><br><br>
+            So, I have followed this equation path and created a javascript function to find the best data curve fit given X-Y data points and desired polynomial degree:<br><br>
+            <img alt="image from MATLAB" src="../media/image_4.png">
+            <br><br><br>
+            Along with some other related functions that may be useful to test/compare and extend the use case:<br><br>
+            <img alt="image from MATLAB" src="../media/image_5.png">
+            <br><br><br>
+            <code>eval_expression</code> function is sort of another javascript implementation of another MATLAB function <code>polyval</code>. However, is more generic as it can be used
+            to evaluate any symbolically defined expression.<br><br>
+            All code related for this project can be found at "public" GITHUB repository here:<a></a>
+        </p>
+    </div>
+
 
     <!--    get user input:-->
     <!--    <div id="drop-area">Drag & Drop Files Here</div>-->
+    <p>Insert comma separated X and Y coordinates of data points bellow using comma (,) as separator:</p>
     <div class="input_wrap">
         <label class="btn-group box_shadow custom_label">X:</label>
         <input class="form-control custom_input" type="text" id="x_values" style="color: darkslategray; height: 28px; width: 700px; display: inline-block; margin-bottom: 0; padding: 2px;">
     </div>
-
     <div class="input_wrap">
         <label class="btn-group box_shadow custom_label">Y:</label>
         <input class="form-control custom_input" type="text" id="y_values" style="color: darkslategray; height: 28px; width: 700px; display: inline-block; margin-bottom: 0; padding: 2px;">
     </div>
-
     <div class="input_wrap">
         <label class="btn-group box_shadow custom_label">poly degree:</label>
         <input class="form-control custom_input" type="number" min="0" max="40" id="poly_degree" style="font-size: 1.3em; align-content: center; color: darkslategray; height: 28px; width: 150px; display: inline-block; margin-bottom: 0; padding: 2px;">
@@ -196,23 +233,25 @@
 
             function plot_comparison(x_data, y_data, x_poly, y_poly) {
                 var trace1 = {
-                  x: x_data,
-                  y: y_data,
-                  mode: 'markers',
-                  marker: {
+                x: x_data,
+                y: y_data,
+                mode: 'markers',
+                name: 'data',
+                marker: {
                     color: 'rgba(8,146,63,0.85)',
                     size: 12
-                  }
+                    }
                 };
 
                 var trace3 = {
-                  x: x_poly,
-                  y: y_poly,
-                  mode: 'lines',
-                  line: {
+                x: x_poly,
+                y: y_poly,
+                mode: 'lines',
+                name: 'poly fit',
+                line: {
                     color: 'rgba(201,86,3,0.83)',
                     width: 3
-                  }
+                    }
                 };
 
                 var data = [trace1, trace3];
