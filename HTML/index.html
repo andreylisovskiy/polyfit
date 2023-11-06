@@ -77,11 +77,20 @@
             display: inline-block; float: left; clear: both;
         }
 
+        .headings {
+            width: 100%; margin-top: 5px; margin-bottom: 10px; float: left; display: inline-block; clear: both; text-align: center;
+            font-family: Sans-serif, Geneva, fantasy, Optima; padding: 10px; letter-spacing: 5px; font-size: 2em;
+        }
+
+        p {
+            font-family: Sans-serif, Geneva, fantasy, Optima; padding: 10px; letter-spacing: 1px; color: #5b7793;
+        }
+
     </style>
 </head>
 
 <body id="boot-override">
-    <div style="width: 100%; padding-left: 2%; margin-top: 1%; float: left;">
+    <div class="headings" style="margin-top: 0; padding-top: 0;">
         <H1>Polynomial curve fitting - POLYFIT</H1>
     </div>
 
@@ -111,13 +120,15 @@
             <br><br><br>
             <code>eval_expression</code> function is sort of another javascript implementation of another MATLAB function <code>polyval</code>. However, is more generic as it can be used
             to evaluate any symbolically defined expression.<br><br>
-            All code related for this project can be found at "public" GITHUB repository here:<a></a>
+            All code related for this project can be found at "public" GITHUB repository here:<a href="https://github.com/andreylisovskiy/polyfit.git">https://github.com/andreylisovskiy/polyfit.git</a>
         </p>
     </div>
 
-
     <!--    get user input:-->
     <!--    <div id="drop-area">Drag & Drop Files Here</div>-->
+    <div class="headings">
+        <H1>TEST DRIVE..</H1>
+    </div>
     <p>Insert comma separated X and Y coordinates of data points bellow using comma (,) as separator:</p>
     <div class="input_wrap">
         <label class="btn-group box_shadow custom_label">X:</label>
