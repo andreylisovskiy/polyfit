@@ -15,7 +15,7 @@
     <title>Data Fitting</title>
 
     <!--# # My custom CSS:-->
-<!--    <link rel="stylesheet" type="css" href="../CSS/live_schedule_template.css">-->
+    <link rel="stylesheet" type="text/css" href="./CSS/live_schedule_template.css">
 
     <style>
         body {
@@ -100,23 +100,23 @@
             hold true within the bounds of data points and are only good for interpolation and never extrapolation guesses later on.
             Thus, I have decided to implement my favorite feature from MATLAB the “polyfit” method.<br><br><br>
             MATLAB describes it as such:<br><br>
-            <img alt="image from MATLAB" src="image_1.png">
+            <img alt="image from MATLAB" src="./media/image_1.PNG">
             <br><br><br>
             Under "Algorithms" section in MATLAB docs it shows the way it solves for polynomial coefficients:<br><br>
-            <img alt="image from MATLAB" src="image_2.png">
+            <img alt="image from MATLAB" src="./media/image_2.PNG">
             <br><br><br>
             I then searched the internet for the best implementation and of Vandermonde matrix algorithm and after sorting/filtering through numerous less useful resources I found one
             great one that actually does a great job in explaining/simplifying and providing the best simple solution formula to follow. The website link is here:
             <a href="https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html">https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html</a>
             <br><br><br>
             This site provides a great explanation and the solution flow to reduce it to a rather simple matrix algebra operations here:<br><br>
-            <img alt="image from MATLAB" src="image_3.png">
+            <img alt="image from MATLAB" src="./media/image_3.PNG">
             <br><br><br>
             So, I have followed this equation path and created a javascript function to find the best data curve fit given X-Y data points and desired polynomial degree:<br><br>
-            <img alt="image from MATLAB" src="image_4.png">
+            <img alt="image from MATLAB" src="./media/image_4.PNG">
             <br><br><br>
             Along with some other related functions that may be useful to test/compare and extend the use case:<br><br>
-            <img alt="image from MATLAB" src="image_5.png">
+            <img alt="image from MATLAB" src="./media/image_5.PNG">
             <br><br><br>
             <code>eval_expression</code> function is sort of another javascript implementation of another MATLAB function <code>polyval</code>. However, is more generic as it can be used
             to evaluate any symbolically defined expression.<br><br>
@@ -165,17 +165,17 @@
 
     <!--################################################################################################# END OF HTML-->
     <!--# SCRIPT IMPORTS:-->
-    <script src="../JS/jQuery/jquery-3.7.1.min.js" type="javascript"></script>
-    <script src="../JS/math/math.min.js" type="javascript"></script>
-    <script src="../JS/plotly/plotly-2.27.0.min.js" charset="utf-8" type="javascript"></script>
+    <script src="./JS/jQuery/jquery-3.7.1.min.js" type="text/javascript"></script>
+    <script src="./JS/math/math.min.js" type="text/javascript"></script>
+    <script src="./JS/plotly/plotly-2.27.0.min.js" charset="utf-8" type="text/javascript"></script>
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js" integrity="sha512-6LKCH7i2+zMNczKuCT9ciXgFCKFp3MevWTZUXDlk7azIYZ2wF5LRsrwZqO7Flt00enUI+HwzzT5uhOvy6MNPiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
     <!--ChartJS:-->
-    <script src="../JS/Chart.js-2.9.4/Chart.min.js" type="javascript"></script>
+    <script src="./JS/Chart.js-2.9.4/Chart.min.js" type="text/javascript"></script>
     <!--my JS:-->
-    <script src="../JS/js_code.js" type="javascript"></script>
+    <script src="./JS/js_code.js" type="text/javascript"></script>
 
     <!--# SCRIPTING:-->
-    <script type="javascript">    // ################################################################################ JAVASCRIPT + JQUERY:
+    <script type="text/javascript">    // ################################################################################ JAVASCRIPT + JQUERY:
         $(document).ready(function() {
             // ************************************************************************************************* Events:
 
