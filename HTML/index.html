@@ -100,23 +100,23 @@
             hold true within the bounds of data points and are only good for interpolation and never extrapolation guesses later on.
             Thus, I have decided to implement my favorite feature from MATLAB the “polyfit” method.<br><br><br>
             MATLAB describes it as such:<br><br>
-            <img alt="image from MATLAB" src="../media/image_1.png">
+            <img alt="image from MATLAB" src="image_1.png">
             <br><br><br>
             Under "Algorithms" section in MATLAB docs it shows the way it solves for polynomial coefficients:<br><br>
-            <img alt="image from MATLAB" src="../media/image_2.png">
+            <img alt="image from MATLAB" src="image_2.png">
             <br><br><br>
             I then searched the internet for the best implementation and of Vandermonde matrix algorithm and after sorting/filtering through numerous less useful resources I found one
             great one that actually does a great job in explaining/simplifying and providing the best simple solution formula to follow. The website link is here:
             <a href="https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html">https://mathworld.wolfram.com/LeastSquaresFittingPolynomial.html</a>
             <br><br><br>
             This site provides a great explanation and the solution flow to reduce it to a rather simple matrix algebra operations here:<br><br>
-            <img alt="image from MATLAB" src="../media/image_3.png">
+            <img alt="image from MATLAB" src="image_3.png">
             <br><br><br>
             So, I have followed this equation path and created a javascript function to find the best data curve fit given X-Y data points and desired polynomial degree:<br><br>
-            <img alt="image from MATLAB" src="../media/image_4.png">
+            <img alt="image from MATLAB" src="image_4.png">
             <br><br><br>
             Along with some other related functions that may be useful to test/compare and extend the use case:<br><br>
-            <img alt="image from MATLAB" src="../media/image_5.png">
+            <img alt="image from MATLAB" src="image_5.png">
             <br><br><br>
             <code>eval_expression</code> function is sort of another javascript implementation of another MATLAB function <code>polyval</code>. However, is more generic as it can be used
             to evaluate any symbolically defined expression.<br><br>
