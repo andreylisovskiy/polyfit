@@ -104,7 +104,7 @@ function polyfit(x_data, y_data, poly_order) {
         // console.log(X_matrix);
         // console.log(y_matrix);
         // console.log(a_matrix);
-        console.log(a_coefficients);
+        // console.log(a_coefficients);
 
         return a_coefficients;
     } else {
@@ -117,7 +117,9 @@ function get_poly_expr(coefs) {
     let expression_array = [];
     for (let index in coefs) {
         const coef = coefs[index];
-        expression_array.push(coef+'x^'+index);
+        if (coef !== 0) {
+            expression_array.push(coef+'*x^'+index);
+        }
     }
     return expression_array.join('+');
 }
