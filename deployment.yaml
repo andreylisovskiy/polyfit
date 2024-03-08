@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polyfit
+  namespace: polyfit
+  labels:
+    app: polyfit
+    app.kubernetes.io/instance: polyfit
+    app.kubernetes.io/name: polyfit
+spec:
+  selector:
+    matchLabels:
+      app: polyfit
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: polyfit
+        app.kubernetes.io/instance: polyfit
+        app.kubernetes.io/name: polyfit
+    spec:
+      nodeSelector:
+        worker: "true"
+      containers:
+      - name: polyfit
+        image: polyfit/server:latest  # change to your image at docker hub
+#        env:
+#        - name: GOTIFY_DB_SQLITE
+#          value: /app/data/gotify.db
+#        - name: GOTIFY_PORT
+#          value: "80"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: polyfit
+          mountPath: /app/data
+      volumes:
+      - name: polyfit
+        persistentVolumeClaim:
+          claimName: polyfit
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polyfit
+  namespace: polyfit
+  labels:
+    app: polyfit
+    app.kubernetes.io/instance: polyfit
+    app.kubernetes.io/name: polyfit
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: polyfit
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: polyfit
+  namespace: polyfit
+  labels:
+    app: polyfit
+    app.kubernetes.io/instance: polyfit
+    app.kubernetes.io/name: polyfit
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
