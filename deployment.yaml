@@ -33,7 +33,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: polyfit
-          mountPath: /app/data
+          mountPath: /usr/share/nginx
       volumes:
       - name: polyfit
         persistentVolumeClaim:
