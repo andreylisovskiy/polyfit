@@ -11,7 +11,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.ref_name }}
+  IMAGE_NAME: ${{ github.event.repository.name }}
 
 jobs:
 
@@ -23,10 +23,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
 #      run: docker-compose build --no-cache --force-rm
-      run: docker build -t ${{ github.ref_name }} .
+      run: docker build -t ${{ env.IMAGE_NAME }} .
     - name: Test the Docker image
         #        run: docker-compose up -d
-      run: docker run --name ${{ github.ref_name }} -dp 8001:8001 ${{ github.ref_name }}
+      run: docker run --name ${{ env.IMAGE_NAME }} -dp 8001:8001 ${{ env.IMAGE_NAME }}
 #  test:
 #    runs-on: ubuntu-latest
 #    steps:
@@ -34,7 +34,7 @@ jobs:
 #      - uses: actions/checkout@v3
 #      - name: Test the Docker image
 ##        run: docker-compose up -d
-#        run: docker run --name ${{ github.ref_name }} -dp 8001:8001 ${{ github.ref_name }}
+#        run: docker run --name ${{ env.IMAGE_NAME }} -dp 8001:8001 ${{ env.IMAGE_NAME }}
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
