@@ -94,6 +94,9 @@
         <H1>Polynomial curve fitting - POLYFIT</H1>
     </div>
 
+    <p>Server IP is:</p><br>
+    <p id="server_ip"></p>
+
     <div>
         <p>
             I was always fascinated by the idea of non-linear curve fitting the given data. Especially the polynomial fit one, as opposed to piece-wise splines, because piece-wise only
@@ -309,6 +312,11 @@
 
 
             function main() {
+                // show local ip:
+                var ip = location.host;
+                // alert(ip);
+                $('#server_ip').html(ip);
+
                 //get data points:
                 let x = [1, 2, 3];
                 let y = [1, 4, 9];
