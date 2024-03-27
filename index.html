@@ -313,9 +313,13 @@
 
             function main() {
                 // show local ip:
-                var ip = location.host;
-                // alert(ip);
-                $('#server_ip').html(ip);
+                $.getJSON("https://api.ipify.org?format=json",
+                function (data) {
+                    // Displayin IP address on screen
+                    var local_ip = data.ip;
+                    $("#server_ip").html(local_ip);
+                    alert(local_ip);
+                });
 
                 //get data points:
                 let x = [1, 2, 3];
